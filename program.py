@@ -66,16 +66,16 @@ def showMainMenu():
      elif choice == 3:
          found = False
          if os.stat('sample.txt').st_size> 0: 
-          sitem = input("Enter the imei ") 
-          with open('sample.txt','w') as user_file:
-             lines = user_file.readlines()
-             for line in lines:
-                if line.find(sitem) != -1:
-                   print("current data is " + line)
-                   print()
-                   found = True
-             if found == False:
-              print("Phone not available")
+          #sitem = input("Enter the imei ") 
+          with open('sample.txt','r') as user_file:
+             data = user_file.readlines()
+          print(data)
+          imei = "3"
+          brand = "apple"
+          model = " seven"
+          data[1]= imei + " " + brand + " " + model + "\n"
+          with open("sample.txt","w") as user_file:
+             user_file.writelines(data)
           showMainMenu()
          else:
            print("File empty")
