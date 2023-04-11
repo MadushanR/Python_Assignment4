@@ -13,37 +13,30 @@ def showMainMenu():
      choice = int(input("Enter the choice "))
      if choice == 1:
         imei = input("Enter the imei ")
-        if os.stat('sample.txt').st_size> 0:  
-         with open('sample.txt','r') as user_file:
-             content = user_file.read()
-             if str(imei) in content:
-                 print("IMEI already used enter a new one")
+        if os.stat('sample.json').st_size> 0:  
+         with open("sample.json") as outfile:
+             data = json.loads(outfile.read())
+             ##print(json.dumps(data))
+             found = False
+             for i in data:
+              if str(imei) in i["imei"]:
+                  found = True
+             if found:
+                  print("IMEI already in use")
              else:
-                 brand = input("Enter the brand ")
-                 model = input("Enter the model ")
-                 phone = shop.shop(imei,brand,model)
-                 simei = str(phone.imei)
-                 smodel = str(phone.model)
-                 sbrand = str(phone.brand)
-                 phoneList.append(simei + " " + sbrand + " " + sbrand)
-                 sphone = simei + " " + smodel + " " + sbrand
-                 file = open("sample.txt", "a")
-                 for item in phoneList:
-                    file.write(str(phoneList))
-                 file.close()
+                  brand = input("Enter the brand ")
+                  model = input("Enter the model ")
+                  phone = shop.shop(imei,brand,model)
+                  json_object = json.dumps(phone.__dict__, indent=4)
+                  with open("sample.json","a") as outfile:
+                     outfile.write(json_object)
         else:
            brand = input("Enter the brand ")
            model = input("Enter the model ")
            phone = shop.shop(imei,brand,model)
-           simei = str(phone.imei)
-           smodel = str(phone.model)
-           sbrand = str(phone.brand)
-           sphone = simei + " " + smodel + " " + sbrand
-           print(sphone)
-           phoneList.append(phone)
-           file = open("sample.txt", "a")
-           file.write(sphone)
-           file.close()
+           json_object = json.dumps(phone.__dict__, indent=4)
+           with open("sample.json","w") as outfile:
+            outfile.write(json_object)
 
           # with open('sample.txt', 'w') as user_file:
             #json.dump(phone.__dict__,user_file)
@@ -57,6 +50,7 @@ def showMainMenu():
              for line in lines:
                 if line.find(sitem) != -1:
                    print(line)
+                   print()
                    found = True
              if found == False:
               print("Phone not available")
@@ -65,7 +59,21 @@ def showMainMenu():
            print("File empty")
            showMainMenu()
      elif choice == 3:
-         pass
+         found = False
+         if os.stat('sample.txt').st_size> 0: 
+          #sitem = input("Enter the imei ") 
+          with open('sample.txt','r') as user_file:
+             data = user_file.readlines()
+          print(data)
+          imei = "3"
+          brand = "apple"
+          model = " seven"
+          data[1]= imei + " " + brand + " " + model + "\n"
+          with open("sample.txt","w") as user_file:
+             user_file.writelines(data)
+          showMainMenu()
+         else:
+           print("File empty")
      elif choice == 4:
          pass
      elif choice == 5:

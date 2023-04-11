@@ -5,7 +5,7 @@ phoneList = []
 
 def showMainMenu():
      print("\nEnter 1 to add a phone ")
-     print("Enter 2 to search a phone ")
+     print("Enter 2 to search a phone ")    
      print("Enter 3 to edit a phone ")
      print("Enter 4 to delete a phone")
      print("Enter 5 to see all phones")
