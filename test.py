@@ -1,4 +1,4 @@
-import shop,json,os,pickle
+import shop,json,os
 
 global phoneList 
 phoneList = []
@@ -12,11 +12,11 @@ def showMainMenu():
      print("Enter 6 to exit \n")
      choice = int(input("Enter the choice "))
      if choice == 1:
+        data = []
         imei = input("Enter the imei ")
         if os.stat('sample.json').st_size> 0:  
          with open("sample.json") as outfile:
              data = json.loads(outfile.read())
-             ##print(json.dumps(data))
              found = False
              for i in data:
               if str(imei) in i["imei"]:
@@ -24,35 +24,41 @@ def showMainMenu():
              if found:
                   print("IMEI already in use")
              else:
+                  with open("sample.json") as outfile:
+                   data = json.loads(outfile.read())
                   brand = input("Enter the brand ")
                   model = input("Enter the model ")
                   phone = shop.shop(imei,brand,model)
-                  json_object = json.dumps(phone.__dict__, indent=4)
-                  with open("sample.json","a") as outfile:
+                  data.append(phone.__dict__)
+                  json_object = json.dumps(data, indent=4)
+                  with open("sample.json","w") as outfile:
                      outfile.write(json_object)
         else:
            brand = input("Enter the brand ")
            model = input("Enter the model ")
            phone = shop.shop(imei,brand,model)
-           json_object = json.dumps(phone.__dict__, indent=4)
+           data.append(phone.__dict__)
+           json_object = json.dumps(data, indent=4)
            with open("sample.json","w") as outfile:
             outfile.write(json_object)
 
-          # with open('sample.txt', 'w') as user_file:
-            #json.dump(phone.__dict__,user_file)
         showMainMenu()
      elif choice == 2:
          found = False
-         if os.stat('sample.txt').st_size> 0: 
+         if os.stat('sample.json').st_size> 0: 
           sitem = input("Enter the imei ") 
-          with open('sample.txt','r') as user_file:
-             lines = user_file.readlines()
-             for line in lines:
-                if line.find(sitem) != -1:
-                   print(line)
-                   print()
-                   found = True
-             if found == False:
+          with open("sample.json") as outfile:
+             data = json.loads(outfile.read())
+             for i in data:
+              if str(sitem) in i["imei"]:
+                  found = True
+                  print("IMEI : ")
+                  print(i["imei"])
+                  print("\nBrand : ")
+                  print(i["brand"])
+                  print("\nModel : ")
+                  print(i["model"])
+          if found == False:
               print("Phone not available")
           showMainMenu()
          else:
@@ -77,8 +83,8 @@ def showMainMenu():
      elif choice == 4:
          pass
      elif choice == 5:
-        if os.stat('sample.txt').st_size> 0:  
-         with open("sample.txt") as file:
+        if os.stat('sample.json').st_size> 0:  
+         with open("sample.json") as file:
           for item in file:
            print(item)
          showMainMenu()

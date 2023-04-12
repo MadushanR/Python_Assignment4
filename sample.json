@@ -1,9 +1,17 @@
-[{
-    "imei": "1",
-    "brand": "applel",
-    "model": "seven"
-},{
-    "imei": "2",
-    "brand": "applel",
-    "model": "seven"
-}]
+[
+    {
+        "imei": "1",
+        "brand": "apple",
+        "model": "7"
+    },
+    {
+        "imei": "2",
+        "brand": "samsung",
+        "model": "s7"
+    },
+    {
+        "imei": "3",
+        "brand": "moto",
+        "model": "play"
+    }
+]
