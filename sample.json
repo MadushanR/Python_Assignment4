@@ -1,17 +1,12 @@
 [
     {
         "imei": "1",
-        "brand": "apple",
-        "model": "7"
+        "brand": "Apple",
+        "model": "13"
     },
     {
         "imei": "2",
-        "brand": "samsung",
-        "model": "s7"
-    },
-    {
-        "imei": "3",
-        "brand": "moto",
-        "model": "play"
+        "brand": "Apple",
+        "model": "14"
     }
 ]

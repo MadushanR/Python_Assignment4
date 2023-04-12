@@ -22,7 +22,7 @@ def showMainMenu():
               if str(imei) in i["imei"]:
                   found = True
              if found:
-                  print("IMEI already in use")
+                  print("\nIMEI already in use")
              else:
                   with open("sample.json") as outfile:
                    data = json.loads(outfile.read())
@@ -52,34 +52,47 @@ def showMainMenu():
              for i in data:
               if str(sitem) in i["imei"]:
                   found = True
-                  print("IMEI : ")
+                  print("\nIMEI : ")
                   print(i["imei"])
                   print("\nBrand : ")
                   print(i["brand"])
                   print("\nModel : ")
                   print(i["model"])
           if found == False:
-              print("Phone not available")
+              print("\nPhone not available")
           showMainMenu()
          else:
            print("File empty")
            showMainMenu()
      elif choice == 3:
          found = False
-         if os.stat('sample.txt').st_size> 0: 
-          #sitem = input("Enter the imei ") 
-          with open('sample.txt','r') as user_file:
-             data = user_file.readlines()
-          print(data)
-          imei = "3"
-          brand = "apple"
-          model = " seven"
-          data[1]= imei + " " + brand + " " + model + "\n"
-          with open("sample.txt","w") as user_file:
-             user_file.writelines(data)
+         if os.stat('sample.json').st_size> 0: 
+          sitem = input("Enter the imei ") 
+          with open("sample.json") as outfile:
+             data = json.loads(outfile.read())
+             for i in data:
+              if str(sitem) in i["imei"]:
+                  print("Current IMEI : ")
+                  print(i["imei"])
+                  print("\nCurrent Brand : ")
+                  print(i["brand"])
+                  print("\nCurrent Model : ")
+                  print(i["model"])
+                  found = True
+                  brand = input("Enter new brand : ")
+                  i["brand"] = brand
+                  model = input("Enter new model : ")
+                  i["model"] = model
+                  json_object = json.dumps(data, indent=4)
+                  with open("sample.json","w") as outfile:
+                     outfile.write(json_object)
+                     print("\nEditing success")
+          if found == False:
+              print("\nPhone not available")
           showMainMenu()
          else:
            print("File empty")
+           showMainMenu()
      elif choice == 4:
          pass
      elif choice == 5:
