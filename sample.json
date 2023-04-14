@@ -8,25 +8,5 @@
         "imei": "2",
         "brand": "Apple",
         "model": "14"
-    },
-    {
-        "imei": "3",
-        "brand": "Samsung",
-        "model": "S7"
-    },
-    {
-        "imei": "4",
-        "brand": "Samsung",
-        "model": "S21"
-    },
-    {
-        "imei": "5",
-        "brand": "Moto",
-        "model": "E1"
-    },
-    {
-        "imei": "6",
-        "brand": "Apple",
-        "model": "7"
     }
 ]

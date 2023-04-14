@@ -1,6 +1,7 @@
 import shop,json,os
 
 def showMainMenu():
+    try:
      print("\nEnter 1 to add a phone ")
      print("Enter 2 to search a phone ")
      print("Enter 3 to edit a phone ")
@@ -11,7 +12,7 @@ def showMainMenu():
      if choice == 1:
         try:
          data = []
-         imei = input("Enter the imei ")
+         imei = int(input("Enter the imei "))
          if os.stat('sample.json').st_size> 0:  
            with open("sample.json") as outfile:
                data = json.loads(outfile.read())
@@ -26,6 +27,7 @@ def showMainMenu():
                      data = json.loads(outfile.read())
                     brand = input("Enter the brand ")
                     model = input("Enter the model ")
+                    imei = str(imei)
                     phone = shop.shop(imei,brand,model)
                     data.append(phone.__dict__)
                     json_object = json.dumps(data, indent=4)
@@ -35,34 +37,41 @@ def showMainMenu():
          else:
              brand = input("Enter the brand ")
              model = input("Enter the model ")
+             imei = str(imei)
              phone = shop.shop(imei,brand,model)
              data.append(phone.__dict__)
              json_object = json.dumps(data, indent=4)
              with open("sample.json","w") as outfile:
               outfile.write(json_object)
               print("Successfully added")
-         showMainMenu()
         except:
-            print("Enter a valid IMEI")
-            showMainMenu()
+           print("Enter a valid IMEI")
+           showMainMenu()
+        showMainMenu()
      elif choice == 2:
+        try:
          TChoice = int(input("Enter 1 to choose by IMEI or 2 to choose by Brand "))
          found = False
          if os.stat('sample.json').st_size> 0: 
             if TChoice == 1:
-             sitem = input("Enter the imei ")
-             with open("sample.json") as outfile:
-               data = json.loads(outfile.read())
-               for i in data:
-                if str(sitem) in i["imei"]:
-                   found = True
-                   print("\nIMEI : ",end="")
-                   print(i["imei"],end="")
-                   print("\nBrand : ",end="")
-                   print(i["brand"],end="")
-                   print("\nModel : ",end="")
-                   print(i["model"],end="")
-                   print("\n")
+             try:
+              sitem = int(input("Enter the imei "))
+              with open("sample.json") as outfile:
+                data = json.loads(outfile.read())
+                for i in data:
+                 if str(sitem) in i["imei"]:
+                    found = True
+                    print("\nIMEI : ",end="")
+                    print(i["imei"],end="")
+                    print("\nBrand : ",end="")
+                    print(i["brand"],end="")
+                    print("\nModel : ",end="")
+                    print(i["model"],end="")
+                    print("\n")
+              if found == False:
+                 print("\nPhone not available")
+             except:
+                print("Enter a valid IMEI")
             elif TChoice == 2:
              sitem = input("Enter the brand ") 
              with open("sample.json") as outfile:
@@ -77,16 +86,21 @@ def showMainMenu():
                   print("\nModel : ",end="")
                   print(i["model"],end="")
                   print("\n")
-            if found == False:
+             if found == False:
                 print("\nPhone not available")
-            showMainMenu()
+            else:
+               print("Enter a valid choice")
          else:
              print("File empty")
              showMainMenu()
+        except:
+            print("Enter a valid number")
+        showMainMenu()
      elif choice == 3:
+        try:
          found = False
          if os.stat('sample.json').st_size> 0: 
-          sitem = input("Enter the imei ") 
+          sitem = int(input("Enter the imei ")) 
           with open("sample.json") as outfile:
              data = json.loads(outfile.read())
              for i in data:
@@ -108,14 +122,17 @@ def showMainMenu():
                      print("\nEditing success")
           if found == False:
               print("\nPhone not available")
-          showMainMenu()
          else:
            print("File empty")
            showMainMenu()
+        except:
+           print("Enter a valid IMEI")
+        showMainMenu()
      elif choice == 4:
+        try:
          found = False
          if os.stat('sample.json').st_size> 0: 
-          sitem = input("Enter the imei ") 
+          sitem = int(input("Enter the imei ")) 
           with open("sample.json") as outfile:
              data = json.loads(outfile.read())
              for i in data:
@@ -128,10 +145,12 @@ def showMainMenu():
                      print("\nDeleting success")
           if found == False:
               print("\nPhone not available")
-          showMainMenu()
          else:
            print("File empty")
            showMainMenu()
+        except:
+           print("Enter a valid IMEI")
+        showMainMenu()
      elif choice == 5:
         if os.stat('sample.json').st_size> 0:  
          with open("sample.json") as file:
@@ -147,6 +166,9 @@ def showMainMenu():
          print("\nEnter a valid choice ")
          choice = int(input("Enter the choice "))
          showMainMenu()
+    except:
+      print("Enter a valid choice")
+      showMainMenu()
 
 
 showMainMenu()
